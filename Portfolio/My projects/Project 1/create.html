@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bar">
+    <form class="content" id="createForm">
+      <h2>Create Account</h2>
+      <label for="newName">Name:</label>
+      <input type="text" id="newName" placeholder="Enter your name" required />
+      <br /><br />
+      <label for="newPassword">Password:</label>
+      <input type="password" id="newPassword" placeholder="Enter your password" required />
+      <br /><br />
+      <button type="submit">Create Account</button>
+    </form>
+  </div>
+
+  <script>
+    const createForm = document.getElementById("createForm");
+
+    createForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("newName").value.trim();
+      const password = document.getElementById("newPassword").value.trim();
+
+      let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+      // Check if user already exists
+      if (users.find(user => user.name === name)) {
+        alert("User already exists!");
+        return;
+      }
+
+      // Add new user
+      users.push({ name, password });
+      localStorage.setItem("users", JSON.stringify(users));
+
+      alert("Account created successfully! Please login.");
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
